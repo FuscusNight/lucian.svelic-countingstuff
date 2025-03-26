@@ -3,6 +3,10 @@ import { Text, View, StyleSheet } from "react-native";
 import { CountableButton } from "./CountableButton";
 import { CommonStyles } from "../styles/CommonStyles";
 
+// Props:
+// - countable: the item object with name and count properties
+// - changeCount: function to increase/decrease the count (passed from app.js)
+// - index: position in the array (needed to identify which item to update)
 export const CountableRow = ({ countable, changeCount, index }) => (
   <View style={CommonStyles.row}>
     <View style={styles.nameColumn}>
