@@ -53,9 +53,23 @@ export default function App() {
 
   // Adds a new countable to the list
   const addNewCountable = (name) => {
-    // Create a new array with the added countable
-    const newState = [...countables, { name, count: 0 }];
-    setCountables(newState);
+    // is name empty?
+    if (!name.trim()) {
+      return false; // Yep yep, return false to prevent adding empty items
+    }
+
+    const nameExists = countables.some(
+      (item) => item.name.toLowerCase() === name.toLowerCase() // lowercase to avoid case sensitivity issue, ie Crow =/= crow
+    );
+
+    if (!nameExists) {
+      // Create a new array with the added countable
+      const newState = [...countables, { name, count: 0 }];
+      setCountables(newState);
+      return true;
+    }
+
+    return false; // name exists, too bad
   };
 
   // RENDER UI
