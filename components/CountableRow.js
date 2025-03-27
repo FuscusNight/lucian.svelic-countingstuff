@@ -25,6 +25,7 @@ export const CountableRow = ({ countable, changeCount, index }) => (
         submit={() => {
           changeCount(-1, index);
         }}
+        disabled={countable.count === 0} // if the count is 0, turn it off
       />
     </View>
   </View>
