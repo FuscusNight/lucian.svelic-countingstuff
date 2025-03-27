@@ -22,6 +22,7 @@ export const AddRow = ({ addNewCountable }) => {
         }}
         value={name}
       />
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
       <CountableButton
         label="Add"
         submit={() => {
@@ -43,7 +44,6 @@ export const AddRow = ({ addNewCountable }) => {
           }
         }}
       />
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
     </View>
   );
 };
@@ -51,7 +51,7 @@ export const AddRow = ({ addNewCountable }) => {
 const styles = StyleSheet.create({
   errorText: {
     color: "red",
-    textAlign: "center",
-    marginTop: 5,
+    marginHorizontal: 10, // margin for error text on both sides
+    fontSize: 18,
   },
 });
