@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, TextInput, Text, StyleSheet } from "react-native";
+import { View, TextInput, Text, StyleSheet, Keyboard } from "react-native";
 
 import { CountableButton } from "./CountableButton";
 import { CommonStyles } from "../styles/CommonStyles";
@@ -33,6 +33,7 @@ export const AddRow = ({ addNewCountable }) => {
             setName("");
             // Clear error log
             setError("");
+            Keyboard.dismiss();
           } else {
             if (name.trim()) {
               setError(`"${name}" already exists!`);
