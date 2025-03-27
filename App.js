@@ -82,15 +82,25 @@ export default function App() {
           style={styles.container}
         >
           <ScrollView>
-            {/* Map through countables array to create a row for each item */}
-            {countables.map((countable, index) => (
-              <CountableRow
-                countable={countable}
-                key={countable.name} // Unique key for React's reconciliation
-                changeCount={changeCount} // passes a function from the parent component (App.js) to the child component (CountableRow)
-                index={index} // Pass index for changeCount to identify which item to update
-              />
-            ))}
+            {/* Map n Sort through countables array to create a row for each item */}
+            {[...countables] // copy to manipulate for sorting, though we don't pass it back to the og this time, it's just for display
+              .sort((a, b) => {
+                if (b.count !== a.count) {
+                  // sort by descending order
+                  return b.count - a.count;
+                }
+                return a.name.localeCompare(b.name); // if count is same, sort by name
+              })
+              .map((countable, index) => (
+                <CountableRow
+                  countable={countable}
+                  key={countable.name} // Unique key for React's reconciliation
+                  changeCount={changeCount} // passes a function from the parent component (App.js) to the child component (CountableRow)
+                  index={countables.findIndex(
+                    (item) => item.name === countable.name
+                  )} // can't use map index anymore, findindex to get og index in unsorted array
+                />
+              ))}
           </ScrollView>
           {/* Component for adding new countable items */}
           <AddRow addNewCountable={addNewCountable} />
