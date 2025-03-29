@@ -72,6 +72,11 @@ export default function App() {
     return false; // name exists, too bad
   };
 
+  const deleteCountable = (nameToDelete) => {
+    const newState = countables.filter((item) => item.name !== nameToDelete);
+    setCountables(newState);
+  };
+
   // RENDER UI
   return (
     // SafeAreaProvider enables SafeAreaView to work so phone UI doesn't cover content, both it and AreaView are needed for iOS
@@ -96,6 +101,7 @@ export default function App() {
                   countable={countable}
                   key={countable.name} // Unique key for React's reconciliation
                   changeCount={changeCount} // passes a function from the parent component (App.js) to the child component (CountableRow)
+                  deleteCountable={deleteCountable}
                   index={countables.findIndex(
                     (item) => item.name === countable.name
                   )} // can't use map index anymore, findindex to get og index in unsorted array
