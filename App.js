@@ -77,6 +77,27 @@ export default function App() {
     setCountables(newState);
   };
 
+  const editCountableName = (oldName, newName) => {
+    // checking if name exists
+    const nameExists = countables.some(
+      (item) =>
+        item.name.toLowerCase() === newName.toLowerCase() &&
+        // eslint-disable-next-line prettier/prettier
+        item.name !== oldName
+    );
+    // if name doesnt exist and newName is not empty, return the new name so we can edit it
+    if (!nameExists && newName.trim()) {
+      const newState = countables.map(
+        (item) =>
+          // eslint-disable-next-line prettier/prettier
+          item.name === oldName ? { ...item, name: newName } : item // ...item copy properties of og item, but override name with newName
+      );
+      setCountables(newState);
+      return true;
+    }
+    return false; //keep unchanged if name exists or is empty
+  };
+
   // RENDER UI
   return (
     // SafeAreaProvider enables SafeAreaView to work so phone UI doesn't cover content, both it and AreaView are needed for iOS
@@ -102,6 +123,7 @@ export default function App() {
                   key={countable.name} // Unique key for React's reconciliation
                   changeCount={changeCount} // passes a function from the parent component (App.js) to the child component (CountableRow)
                   deleteCountable={deleteCountable}
+                  editCountableName={editCountableName}
                   index={countables.findIndex(
                     (item) => item.name === countable.name
                   )} // can't use map index anymore, findindex to get og index in unsorted array
