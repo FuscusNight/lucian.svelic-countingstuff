@@ -15,6 +15,7 @@ export const AddRow = ({ addNewCountable }) => {
     <View style={CommonStyles.row}>
       {/* onChangeText automatically passes the current text to setName when user types */}
       <TextInput
+        style={styles.input}
         placeholder="Enter name"
         onChangeText={(text) => {
           setName(text);
@@ -49,6 +50,9 @@ export const AddRow = ({ addNewCountable }) => {
 };
 
 const styles = StyleSheet.create({
+  input: {
+    flex: 1, // takes up the full width of the text input row
+  },
   errorText: {
     color: "red",
     marginHorizontal: 10, // margin for error text on both sides

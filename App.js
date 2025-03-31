@@ -6,6 +6,8 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  View,
+  Text,
 } from "react-native";
 // SafeAreaView ensures content is displayed in visible areas (away from notches, etc.)
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -108,27 +110,33 @@ export default function App() {
           style={styles.container}
         >
           <ScrollView>
-            {/* Map n Sort through countables array to create a row for each item */}
-            {[...countables] // copy to manipulate for sorting, though we don't pass it back to the og this time, it's just for display
-              .sort((a, b) => {
-                if (b.count !== a.count) {
-                  // sort by descending order
-                  return b.count - a.count;
-                }
-                return a.name.localeCompare(b.name); // if count is same, sort by name
-              })
-              .map((countable, index) => (
-                <CountableRow
-                  countable={countable}
-                  key={countable.name} // Unique key for React's reconciliation
-                  changeCount={changeCount} // passes a function from the parent component (App.js) to the child component (CountableRow)
-                  deleteCountable={deleteCountable}
-                  editCountableName={editCountableName}
-                  index={countables.findIndex(
-                    (item) => item.name === countable.name
-                  )} // can't use map index anymore, findindex to get og index in unsorted array
-                />
-              ))}
+            {countables.length === 0 ? (
+              <View style={styles.emptyContainer}>
+                <Text style={styles.emptyText}>Pretty empty in here 😕</Text>
+              </View>
+            ) : (
+              /* Map n Sort through countables array to create a row for each item */
+              [...countables] // copy to manipulate for sorting, though we don't pass it back to the og this time, it's just for display
+                .sort((a, b) => {
+                  if (b.count !== a.count) {
+                    // sort by descending order
+                    return b.count - a.count;
+                  }
+                  return a.name.localeCompare(b.name); // if count is same, sort by name
+                })
+                .map((countable, index) => (
+                  <CountableRow
+                    countable={countable}
+                    key={countable.name} // Unique key for React's reconciliation
+                    changeCount={changeCount} // passes a function from the parent component (App.js) to the child component (CountableRow)
+                    deleteCountable={deleteCountable}
+                    editCountableName={editCountableName}
+                    index={countables.findIndex(
+                      (item) => item.name === countable.name
+                    )} // can't use map index anymore, findindex to get og index in unsorted array
+                  />
+                ))
+            )}
           </ScrollView>
           {/* Component for adding new countable items */}
           <AddRow addNewCountable={addNewCountable} />
@@ -140,6 +148,17 @@ export default function App() {
 }
 
 const styles = StyleSheet.create({
+  emptyContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    minHeight: "100%", // ensures it takes up the full height of the screen so i can get the text to center of the phone
+  },
+  emptyText: {
+    fontSize: 20,
+    textAlign: "center",
+    color: "#888",
+  },
   container: {
     flex: 1,
     backgroundColor: "#fff",
