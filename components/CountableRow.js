@@ -71,11 +71,11 @@ export const CountableRow = ({
           disabled={countable.count === 0} // if the count is 0, turn it off
         />
         <CountableButton
-          label="X"
+          label="🗑️"
           submit={() => {
             deleteCountable(countable.name);
           }}
-          color="red"
+          color="hsl(0, 83.20%, 69.60%)"
         />
       </View>
     </View>
